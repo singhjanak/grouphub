@@ -1,27 +1,20 @@
-node {
-    // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
-    def server = Artifactory.server "SERVER_ID"
-    // Create an Artifactory Maven instance.
-    def rtMaven = Artifactory.newMavenBuild()
-    def buildInfo
+node{maven=label'} {
+   def mvnHome
+   stage('Preparation') {
 
-    stage('Clone sources') {
-        git url: 'https://github.com/singhjanak/grouphub.git'
-    }
+      git 'https://github.com/singhjanak/grouphub.git'
 
-    stage('Artifactory configuration') {
-        // Tool name from Jenkins configuration
-        rtMaven.tool = "Maven-3.3.9"
-        // Set Artifactory repositories for dependencies resolution and artifacts deployment.
-        rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
-        rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
-    }
+      mvnHome = tool 'maven-3.6.0'
+   }
+stage('Build') {
 
-    stage('Maven build') {
-        buildInfo = rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install'
-    }
+      git 'https://github.com/singhjanak/grouphub.git'
 
-    stage('Publish build info') {
-        server.publishBuildInfo buildInfo
-    }
-}
+      mvnHome = tool 'maven-3.6.0'
+   }
+stage('Deploy') {
+
+      git 'https://github.com/singhjanak/grouphub.git'
+
+      mvnHome = tool 'maven-3.6.0'
+   }
