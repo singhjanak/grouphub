@@ -16,5 +16,4 @@ stage('Deploy') {
 
       git 'https://github.com/singhjanak/grouphub.git'
 
-      mvnHome = tool 'maven-3.6.0'
    }
