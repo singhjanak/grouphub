@@ -1,19 +1,23 @@
-node{maven=label'} {
-   def mvnHome
-   stage('Preparation') {
+pipeline {
+    agent any
+    tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                ''' 
+            }
+        }
 
-      git 'https://github.com/singhjanak/grouphub.git'
-
-      mvnHome = tool 'maven-3.6.0'
-   }
-stage('Build') {
-
-      git 'https://github.com/singhjanak/grouphub.git'
-
-      mvnHome = tool 'maven-3.6.0'
-   }
-stage('Deploy') {
-
-      git 'https://github.com/singhjanak/grouphub.git'
-
-   }
+        stage ('Build') {
+            steps {
+                echo 'This is a minimal pipeline.'
+            }
+        }
+    }
+}
